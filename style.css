@@ -1,0 +1,10 @@
+@charset "utf-8";
+
+* {box-sizing:border-box;}
+.wrap {width:100%; height:100%; padding:50px;}
+.wrap h1 {margin:20px 0; font-size:30px; font-weight:bold;}
+.wrap h2 {margin:10px 0; font-size:24px; color:#ddd;}
+
+.typing_area {display:none; position:relative; margin:30px 0;}
+.typing_area>span.letter {/* padding:0 2px; */ font-size:30px; opacity:0; letter-spacing:1px;}
+.typing_area>span.cursor {display:block; opacity:0; position:absolute; left:0; top:0; width:2px; height:120%; background:#000;}

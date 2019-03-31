@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<title></title>
+<link rel="stylesheet" href="common/css/reset.css"/>
+<link rel="stylesheet" href="style.css"/>
+<script type="text/javascript" src="common/js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="common/js/greensock/TweenMax.min.js"></script>
+<style type="text/css">
+.typing_area>span.letter {display:inline-block; min-width:5px; line-height:1.3; vertical-align:middle;}
+#kor_line {width:200px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+	<h1>키보드 모션 플러그인</h1>
+	<h2>▶ 한글 여러 줄일 때</h2>
+	<div class="box" id="kor_line"></div>
+
+	 <h2>▶ 영문자열 한 개일 때</h2>
+	<div class="box" id="eng_one"></div>
+	
+	<h2>▶ 영문자열 여러개일 때</h2>
+	<div class="box" id="eng_many"></div>
+	
+	<h2>▶ 슬라이스 추가</h2>
+	<div class="box" id="slice_add"></div>
+	
+	<h2>▶ 한글 한 개일 때</h2>
+	<div class="box" id="kor_one"></div>
+	
+	<h2>▶ 한글 여러개일 때</h2>
+	<div class="box" id="kor_many"></div>
+</div>
+<!--// wrap-->
+
+<script type="text/javascript" src="hangul.js"></script>
+<script type="text/javascript" src="typing.js"></script>
+<script type="text/javascript">
+$(function(){
+	KM({
+		eleId: "kor_line",
+		letter: ["여러줄 일 때 키보드 모션 테스트입니다."],
+		letterTime: 0.04,
+		letterDelay: 0.08,
+		startDelay:1,
+		eraseDelay:1,
+		infinite: true
+	});
+
+	KM({
+		eleId:"eng_one",
+		letter:"Keyboard Motion Plugin",
+		letterTime:0.02,
+		letterDelay: 0.04
+	});
+
+	KM({
+		eleId: "eng_many",
+		letter: ["www.google.recruiter.co.kr", "www.naver.com"],
+		letterTime: 0.03,
+		letterDelay: 0.06,
+		startDelay: 1,
+		eraseDelay: 1,
+		infinite: true
+	});
+
+	KM({
+		eleId: "slice_add",
+		letter: ["www.google.recruiter.co.kr"],
+		letterTime: 0.02,
+		letterDelay: 0.06,
+		startDelay: 0.3,
+		eraseDelay: 0.3,
+		infinite: true,
+		slice: true,
+		sliceLetter: "www.#.recruiter.co.kr",
+		sliceInsertLetter: ["inAIR", "naver"]
+	});
+
+	KM({
+			eleId:"kor_one",
+			letter:"한글입력입니다.",
+			letterTime:0.04,
+			letterDelay: 0.08
+		});
+});
+</script>
+</body>
+</html>

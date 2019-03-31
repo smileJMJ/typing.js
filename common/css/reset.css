@@ -1,0 +1,102 @@
+@charset "utf-8";
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+	background: transparent;
+}
+
+a:link { color: #231f20; text-decoration: none; }
+a:hover{ color:#231f20; text-decoration: none; }
+a:visited { color: #231f20; text-decoration: none;}
+a:active { color: #231f20; text-decoration: none;}
+
+body {line-height: 1; background: #fff; color: #000;}
+ol,ul { list-style:none; }
+article, aside, canvas, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section, summary { display: block;}
+nav ul { list-style: none;}
+blockquote, q { quotes: none;}
+blockquote:before, blockquote:after,
+q:before, q:after { content: ''; content: none;}
+a { margin: 0; padding: 0; border: 0; font-size: 100%; vertical-align: baseline; background: transparent;}
+ins { background-color: #ff9; color: #000; text-decoration: none;}
+mark { background-color: #ff9; color: #000; font-style: italic; font-weight: bold;}
+del { text-decoration: line-through;}
+abbr[title], dfn[title] { border-bottom: 1px dotted #000; cursor: help;}
+table { border-collapse: collapse; border-spacing: 0;}
+hr { display: block; height: 1px; border: 0; border-top: 1px solid #cccccc; margin: 1em 0; padding: 0;}
+input, select { vertical-align: middle;}
+caption { text-indent:-9999em; font-size:0; line-height:0;}
+select,input,button,textarea,button{font-size:99%;}
+table{font-size:inherit;}
+pre,code,kbd,samp,tt{font-family:monospace;*font-size:108%;line-height:100%;}
+.content legend {overflow:hidden;visibility:hidden;position:absolute;top:0;left:0;width:1px;height:1px;font-size:0;line-height:0}
+input, select { vertical-align: middle;}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+
+/*	font 설정	*/
+@font-face {
+ font-family: 'NanumSquare';
+ src: url(webfont/NanumSquareR.eot);
+ src: url(webfont/NanumSquareR.eot?#iefix) format('embedded-opentype'),
+      url(webfont/NanumSquareR.woff) format('woff'),
+      url(webfont/NanumSquareR.ttf) format('truetype');
+}
+
+
+@font-face {
+ font-family: 'NanumSquareB';
+ src: url(webfont/NanumSquareB.eot);
+ src: url(webfont/NanumSquareB.eot?#iefix) format('embedded-opentype'),
+      url(webfont/NanumSquareB.woff) format('woff'),
+      url(webfont/NanumSquareB.ttf) format('truetype');
+}
+
+@font-face {
+ font-family: 'NanumBarunGothic';
+ src: url(webfont/NanumBarunGothicWeb.eot);
+ src: url(webfont/NanumBarunGothicWeb.eot?#iefix) format('embedded-opentype'),
+      url(webfont/NanumBarunGothicWeb.woff) format('woff'),
+      url(webfont/NanumBarunGothicWeb.ttf) format('truetype');
+}
