@@ -37,7 +37,7 @@ var KM = (function(){
 		$this.sliceInsertLetter = [];						// slice 된 영역에 추가될 텍스트
 
 		$.extend($this, option);
-
+		$this.eleId = typeof($this.eleId) != "string" ? $($this.eleId) : $("#"+$this.eleId);
 		return $this;
 	};
 
@@ -91,7 +91,7 @@ var KM = (function(){
 	// 마크업 구조 생성
 	fn.makeMarkup = function(){
 		var $this = this,
-			$ele = $("#"+$this.eleId),
+			$ele = $this.eleId,
 			strArr = $this.resultArr,
 			cursorBool = $this.cursorEnd,
 			html = "";
@@ -126,7 +126,7 @@ var KM = (function(){
 	// 문자 여러개일 때 타이핑 입력 모션
 	fn.typingEraseMotion = function(){
 		var $this = this,
-				$ele = $("#" + $this.eleId),
+				$ele = $this.eleId,
 				$targetTypingArea,
 				$letter,
 				$cursor;
@@ -199,7 +199,7 @@ var KM = (function(){
 	// 슬라이스 추가된 타이핑 모션
 	fn.typingSliceMotion = function(){
 		var $this = this,
-				$ele = $("#" + $this.eleId),
+				$ele = $this.eleId,
 				$targetTypingArea = $ele.find(".typing_area"),	
 				$cursor = $targetTypingArea.find(">span.cursor"),
 				$letter = $targetTypingArea.find(">span.letter");
