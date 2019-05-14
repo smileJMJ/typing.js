@@ -36,3 +36,5 @@ KM({
 - sliceLetter: #으로 슬라이스 될 부분을 표시해준다. # 이외의 부분은 타이핑 모션이 적용되지 않고 고정된다.
 - slideInsertLetter: Array  #부분에 들어갈 텍스트들의 array임.
 
+# 데모
+https://smilejmj.github.io/typing.js/keyboard_plugin.html
