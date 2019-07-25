@@ -34,6 +34,7 @@ KM({
 - callback: 하나의 텍스트 입력이 완료된 후 실행될 콜백
 - slice: 텍스트 일부분만 타이핑 되는지 여부
 - sliceLetter: #으로 슬라이스 될 부분을 표시해준다. # 이외의 부분은 타이핑 모션이 적용되지 않고 고정된다.
+  slice는 처음, 중간, 마지막에 가능함. ex) #.recruit.co.kr / www.#.recruit.co.kr / recruit.co.kr.#
 - slideInsertLetter: Array  #부분에 들어갈 텍스트들의 array임.
 
 # 데모
