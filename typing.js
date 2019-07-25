@@ -198,22 +198,73 @@ var KM = (function(){
 
 	// 슬라이스 추가된 타이핑 모션
 	fn.typingSliceMotion = function(){
-		var $this = this,
-				$ele = $this.eleId,
-				$targetTypingArea = $ele.find(".typing_area"),	
-				$cursor = $targetTypingArea.find(">span.cursor"),
-				$letter = $targetTypingArea.find(">span.letter");
-		var letterLength = $this.resultArr[0].length;				// $targetTypingArea의 .letter length
-				sliceLetter = $this.sliceLetter.split("#"),					// #을 제외하고 자른 문자열
-				startLength = sliceLetter[0].length,
-				endLength = sliceLetter[1].length,
-				startPoint = startLength,
-				endPoint = letterLength - endLength,
-				sliceInsertLetter = $this.sliceInsertLetter,				// 슬라이스된 영역에 들어올 문구들
-				curCnt = 0;
+		var $this,
+				$ele,
+				$targetTypingArea,	
+				$cursor,
+				$letter;
 
-		var curTxt = $this.letter[0].split(sliceLetter[0])[1].split(sliceLetter[1])[0];
-		sliceInsertLetter.push(curTxt);							// 현재 letter에 저장해둔 주소에서 슬라이스 단어 추출
+		var letterLength,				// 첫번째로 입력될 텍스트 길이 
+				sliceLetter,				// #이 포함된 잘려질 텍스트 형식
+				sliceLetterLng,			// #을 split한 배열 길이
+				startLength,				// # 앞에 위치하는 텍스트 길이
+				startPoint,					// #이 시작될 지점
+				endLength,					// # 뒤에 위치하는 텍스트 길이
+				endPoint,						// #이 끝나는 지점
+				sliceInsertLetter,	// #자리에 타이핑 될 텍스트 array
+				curCnt,							
+				curTxt,							
+				type; 							// first: #.abcd.co.kr (#이 처음에 있는 경우) / center: ab.#.cd (#이 중간에) / last: abcd.# (#이 마지막에)
+
+		$this = this;
+		$ele = $this.eleId;
+		$targetTypingArea = $ele.find(".typing_area");
+		$cursor = $targetTypingArea.find(">span.cursor");
+		$letter = $targetTypingArea.find(">span.letter");
+
+		letterLength = $this.resultArr[0].length;		 	
+		sliceLetter = $this.sliceLetter.split("#");
+		sliceLetterLng = sliceLetter.length;
+
+		if(!sliceLetter[0]){					// #이 제일 앞에 위치할 때
+			type = 'first';
+			sliceLetter.splice(0, 1);
+			sliceLetterLng = sliceLetter.length;
+			startPoint = 0;
+			startLength = 0;
+			endLength = sliceLetter[sliceLetterLng - 1].length;
+			endPoint = letterLength - endLength;
+		}else if (!sliceLetter[sliceLetterLng - 1]){		// #이 제일 마지막에 위치할 때
+			type = 'last';
+			sliceLetter.splice(sliceLetterLng - 1, 1);
+			sliceLetterLng = sliceLetter.length;
+			startLength = sliceLetter[0].length;
+			startPoint = startLength;
+			endLength = 0;
+			endPoint = letterLength;
+		}else{
+			type = 'center';
+			startLength = sliceLetter[0].length;
+			startPoint = startLength;
+			endLength = sliceLetter[sliceLetterLng - 1].length;
+			endPoint = letterLength - endLength;
+		}
+
+		sliceInsertLetter = $this.sliceInsertLetter;				
+		curCnt = 0;
+		curTxt = $this.letter[0];
+
+		sliceLetter.forEach(function(v, i){
+			if(!v) return; // 슬라이스 된 텍스트가 공백일 때
+			
+			curTxt = curTxt.split(v);
+			if(curTxt.length > 1) {
+				curTxt.forEach(function(x, j){
+					if(!x) curTxt.splice(j, 1);
+				});
+			}
+			curTxt = curTxt[0];
+		});
 		
 		TweenMax.set($ele.find(".typing_area"), {display:"none"});
 		TweenMax.set($targetTypingArea, {display:"block"});
@@ -246,28 +297,33 @@ var KM = (function(){
 
 		// 자른 단어 안에서 모션 실행
 		function _sliceTextMotion(){
+			var $target;
+			var index, txt, html;
+
 			setTimeout(function(){
 				for(var i=endPoint-1; i>=startPoint; i--){
 					TweenMax.to($letter.eq(i), $this.letterTime, {opacity:0, ease:"Bounce.easeInOut", delay:$this.letterDelay*(letterLength-1-i)-0.02, onComplete:function(){
-						var index = $(this.target).index();
+						index = $(this.target).index();
 						$(this.target).remove();
 
 						if(index === startPoint){
-							var txt = sliceInsertLetter[curCnt];
-							var html = "";
+							txt = sliceInsertLetter[curCnt];
+							html = "";
 							
 							for(var j = 0; j<txt.length; j++){
 								html += "<span class='letter change' style='display:none;'>"+txt.substr(j, 1)+"</span>";
 							}
 
-							$letter.eq(startPoint-1).after(html);
+							if(type === 'first') $letter.eq(endPoint).before(html);
+							else $letter.eq(startPoint-1).after(html);
+
 							$letter = $targetTypingArea.find(".letter");
 							letterLength = $letter.length;
 							endPoint = letterLength - endLength;
 
 							for(var k=0; k<txt.length; k++){
 								TweenMax.to($letter.eq(k+startPoint), $this.letterTime, {display:"inline", opacity:1, ease:"Quint.easeInOut", delay:$this.letterDelay*k, onComplete:function(){
-									var $target = $(this.target);
+									$target = $(this.target);
 									TweenMax.set($cursor, {"left":$target.position().left + $target.width()});
 									if($target.index() === startPoint + txt.length-1){
 										if(curCnt === sliceInsertLetter.length - 1){
