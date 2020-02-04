@@ -5,11 +5,11 @@ keyboard typing effect plugin [2018]
 모션 속도/타이밍/지우기/부분 모션 효과 등 옵션 값 설정을 통해 다양한 효과를 구현할 수 있습니다. 
 
 ## 사용법
-hangul.js, typing.js, style.css 를 import 합니다.
+typing.js, style.css 를 import 합니다.
 
 ## 호출 코드
 ```
-KM({
+let km = KM({
       eleId: "input_url",
       letter: ["www.google.recruiter.co.kr"],
       letterTime: 0.04,
@@ -22,7 +22,12 @@ KM({
       slice: true,
       sliceLetter: "www.#.recruiter.co.kr",
       sliceInsertLetter: ["inAIR", "naver", "daum", "abcdefg"]
-    });
+}).init();
+
+또는
+
+km.init(); // 생성 함수
+km.destroy(); // 제거 함수 - TweenMax 모션 및 마크업 제거
 ```    
 - eleId: jquery selector object ex) $("#kor_line")
 - letter: Array ex) ["text1", "text2" ...]
@@ -34,7 +39,6 @@ KM({
 - callback: 하나의 텍스트 입력이 완료된 후 실행될 콜백
 - slice: 텍스트 일부분만 타이핑 되는지 여부
 - sliceLetter: #으로 슬라이스 될 부분을 표시해준다. # 이외의 부분은 타이핑 모션이 적용되지 않고 고정된다.
-  slice는 처음, 중간, 마지막에 가능함. ex) #.recruit.co.kr / www.#.recruit.co.kr / recruit.co.kr.#
 - slideInsertLetter: Array  #부분에 들어갈 텍스트들의 array임.
 
 # 데모
