@@ -17,11 +17,6 @@
     });
 */
 var KM = (function(){
-	var init = function(option){
-		var obj = new Setting(option);
-		obj.makeArrLang();		
-	};
-
 	var Setting = function(option){
 		var $this = this;
 		$this.eleId = "";
@@ -35,13 +30,20 @@ var KM = (function(){
 		$this.slice = false;										// slice 사용 여부
 		$this.sliceLetter = "";									// slice할 텍스트는 #로 표시
 		$this.sliceInsertLetter = [];						// slice 된 영역에 추가될 텍스트
+		$this.option = option;
 
-		$.extend($this, option);
+		$.extend($this, $this.option);
 		$this.eleId = typeof($this.eleId) != "string" ? $($this.eleId) : $("#"+$this.eleId);
 		return $this;
 	};
 
 	var fn = Setting.prototype;
+
+	// 초기화
+	fn.init = function(){
+		var $this = this;
+		$this.makeArrLang();
+	};
 
 	// 문자열 배열 전환 및 언어 체크
 	fn.makeArrLang = function(){
@@ -79,7 +81,7 @@ var KM = (function(){
 				strArr[i].lang = "eng";
 			}else if(/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]+$/i.test(strArr[i].str)){		// 문자열이 한글일 때
 				strArr[i].lang = "kor";
-				strArr[i].strArr = Hangul.disassemble(strArr[i].str, true);			// 자음, 모음 분리
+				//strArr[i].strArr = Hangul.disassemble(strArr[i].str, true);			// 자음, 모음 분리 - 현재 기능 없으므로 주석처리
 			}else{
 				strArr[i].lang = "";
 			}
@@ -346,5 +348,23 @@ var KM = (function(){
 
 	};
 
-	return init;
+	// destroy
+	fn.destroy = function() {
+		var $this = this;
+		var $typingArea = $this.eleId.find('.typing_area');
+		var $letter = $typingArea.find('.letter');
+		var $cursor = $typingArea.find('.cursor');
+		
+		TweenMax.killTweensOf($this.eleId);
+		TweenMax.killTweensOf($typingArea);
+		TweenMax.killTweensOf($letter);
+		TweenMax.killTweensOf($cursor);
+
+		$this.eleId.empty();
+	};
+
+	return function(option) {
+		var setting = new Setting(option);
+		return setting;
+	};
 })();

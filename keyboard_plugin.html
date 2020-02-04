@@ -31,8 +31,9 @@
 	<h2>▶ 한글 한 개일 때</h2>
 	<div class="box" id="kor_one"></div>
 	
-	<h2>▶ 한글 여러개일 때</h2>
-	<div class="box" id="kor_many"></div>
+	<h2>▶ destroy, init 테스트</h2>
+	<input name="search" id="searchInput"/>
+	<div class="box" id="destroy_test"></div>
 </div>
 <!--// wrap-->
 
@@ -48,14 +49,14 @@ $(function(){
 		startDelay:1,
 		eraseDelay:1,
 		infinite: true
-	});
+	}).init();
 
 	KM({
 		eleId:$("#eng_one"),
 		letter:"Keyboard Motion Plugin",
 		letterTime:0.02,
 		letterDelay: 0.04
-	});
+	}).init();
 
 	KM({
 		eleId: $("#eng_many"),
@@ -65,7 +66,7 @@ $(function(){
 		startDelay: 1,
 		eraseDelay: 1,
 		infinite: true
-	});
+	}).init();
 
 	KM({
 		eleId: $("#slice_add"),
@@ -78,14 +79,45 @@ $(function(){
 		slice: true,
 		sliceLetter: "www.#.recruiter.co.kr",
 		sliceInsertLetter: ["inAIR", "naver"]
-	});
+	}).init();
 	
 	KM({
-			eleId:$("#kor_one"),
-			letter:"한글입력입니다.",
-			letterTime:0.04,
-			letterDelay: 0.08
-		});
+		eleId:$("#kor_one"),
+		letter:"한글입력입니다.",
+		letterTime:0.04,
+		letterDelay: 0.08
+	}).init();
+
+	var km = KM({
+		eleId:$("#destroy_test"),
+		letter:"무엇이든지 물어보세요!",
+		letterTime:0.04,
+		letterDelay: 0.08
+	});
+	km.init();
+
+	var focusin = false; // focusin 여부
+
+	$('#searchInput').on({
+		focusin: function() {
+			if(focusin) return;
+
+			TweenMax.killTweensOf($('#destroy_test'));
+			TweenMax.to($('#destroy_test'), 0.5, {autoAlpha: 0, ease: 'Cubic.easeOut', onComplete: function() {
+				TweenMax.set($('#destroy_test'), {display: 'none'});
+				km.destroy();
+			}});
+			focusin = true;
+		},
+		focusout: function() {
+			if(!focusin || $('#searchInput').val()) return;
+
+			TweenMax.killTweensOf($('#destroy_test'));
+			TweenMax.set($('#destroy_test'), {display: 'block', autoAlpha: 1});
+			km.init();
+			focusin = false;
+		}
+	})
 });
 </script>
 </body>
